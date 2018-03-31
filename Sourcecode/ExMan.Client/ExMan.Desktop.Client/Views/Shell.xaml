@@ -5,12 +5,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:ExMan.Desktop.Client.Views"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d" 
         prism:ViewModelLocator.AutoWireViewModel="True"
         d:DesignHeight="300" 
         d:DesignWidth="300"
         Title="Shell">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ShellLoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid x:Name="ParentGrid">
             <Grid.RowDefinitions>

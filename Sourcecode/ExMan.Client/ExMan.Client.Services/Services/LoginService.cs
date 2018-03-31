@@ -44,7 +44,7 @@ namespace ExMan.Client.Services
                 
                 if (bearerTokenResponse != null && bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success)
                 {
-                    if (bearerTokenResponse.ErrorCode != 0)
+                    if (bearerTokenResponse.ErrorCode == 0)
                     {
                         tokenResponse = new ResponseModel<string>
                         {

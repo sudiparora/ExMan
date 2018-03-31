@@ -1,5 +1,7 @@
-﻿using Microsoft.Practices.Unity;
+﻿using ExMan.Desktop.Client.Views;
+using Microsoft.Practices.Unity;
 using Prism.Modularity;
+using Prism.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,7 @@ namespace ExMan.Desktop.Client
 
         public void Initialize()
         {
-            //throw new NotImplementedException();
+            container.RegisterTypeForNavigation<Login>();
         }
     }
 }

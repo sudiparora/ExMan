@@ -31,7 +31,7 @@ namespace ExMan.WebApi.Providers
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await userManager.FindAsync(context.UserName, PasswordHelper.Decrypt(context.Password));
 
             if (user == null)
             {

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Client.Model", "ExMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{C0F326BB-2C9F-4F7D-B0E5-FDB668702FD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Desktop.Resources", "ExMan.Desktop.Resources\ExMan.Desktop.Resources.csproj", "{BD2899C1-CD1E-4BBF-A5E8-F6ED20EE9794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C0F326BB-2C9F-4F7D-B0E5-FDB668702FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0F326BB-2C9F-4F7D-B0E5-FDB668702FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0F326BB-2C9F-4F7D-B0E5-FDB668702FD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2899C1-CD1E-4BBF-A5E8-F6ED20EE9794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2899C1-CD1E-4BBF-A5E8-F6ED20EE9794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2899C1-CD1E-4BBF-A5E8-F6ED20EE9794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2899C1-CD1E-4BBF-A5E8-F6ED20EE9794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
