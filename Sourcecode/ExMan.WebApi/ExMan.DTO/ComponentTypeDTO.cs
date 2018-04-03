@@ -1,11 +1,6 @@
-﻿using ExMan.Business.DTO.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ExMan.DTO.Base;
 
-namespace ExMan.Business.DTO
+namespace ExMan.DTO
 {
     public class ComponentTypeDTO: DTOBase
     {

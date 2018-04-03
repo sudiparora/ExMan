@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Shared", "ExMan.Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Business", "ExMan.Business\ExMan.Business.csproj", "{DC71CAFE-5A16-4D9A-9B46-C655428B3037}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.DTO", "ExMan.DTO\ExMan.DTO.csproj", "{475722B6-B231-4901-B227-709D682B9591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DC71CAFE-5A16-4D9A-9B46-C655428B3037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC71CAFE-5A16-4D9A-9B46-C655428B3037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC71CAFE-5A16-4D9A-9B46-C655428B3037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475722B6-B231-4901-B227-709D682B9591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475722B6-B231-4901-B227-709D682B9591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475722B6-B231-4901-B227-709D682B9591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475722B6-B231-4901-B227-709D682B9591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

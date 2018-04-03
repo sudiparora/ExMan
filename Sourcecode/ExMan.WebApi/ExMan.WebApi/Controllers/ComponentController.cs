@@ -12,7 +12,5 @@ namespace ExMan.WebApi.Controllers
     public class ComponentController : ApiController
     {
 
-
-
     }
 }

@@ -1,19 +1,33 @@
-﻿using ExMan.Business.DTO;
+﻿using AutoMapper;
 using ExMan.DataAccess.DAC;
+using ExMan.DTO;
+using ExMan.Entities;
 using ExMan.Shared.Core;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExMan.Business.BDC
 {
     public class UserBDC : BDCBase
     {
-        public OperationResult<List<ComponentTypeDTO>> GetAuthorizedComponentsForUser(string username)
+        public List<ComponentTypeDTO> GetAuthorizedComponentsForUser(string username)
         {
-            DependencyFactory.Resolve<UserDAC>().GetAuthorizedComponentsForUser(username);
+            List<ComponentTypeDTO> componentTypes = new List<ComponentTypeDTO>();
+            try
+            {
+                OperationResult<List<ComponentType>> componentTypesResult = DependencyFactory.Resolve<UserDAC>().GetAuthorizedComponentsForUser(username);
+                if (componentTypesResult.IsSuccessful)
+                {
+                    componentTypes = Mapper.Map<List<ComponentType>, List<ComponentTypeDTO>>(componentTypesResult.Result);
+                }
+                else
+                { }
+            }
+            catch(Exception ex)
+            {
+                componentTypes = null;
+            }
+            return componentTypes;
         }
     }
 }

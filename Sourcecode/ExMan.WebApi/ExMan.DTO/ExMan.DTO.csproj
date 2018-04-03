@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DC71CAFE-5A16-4D9A-9B46-C655428B3037}</ProjectGuid>
+    <ProjectGuid>{475722B6-B231-4901-B227-709D682B9591}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExMan.Business</RootNamespace>
-    <AssemblyName>ExMan.Business</AssemblyName>
+    <RootNamespace>ExMan.DTO</RootNamespace>
+    <AssemblyName>ExMan.DTO</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,13 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,30 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BDC\BDCBase.cs" />
-    <Compile Include="BDC\UserBDC.cs" />
+    <Compile Include="Base\DTOBase.cs" />
+    <Compile Include="ComponentTypeDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExMan.DataAccess\ExMan.DataAccess.csproj">
-      <Project>{D48B1489-F64F-4F12-9D4A-63B7DC5B4772}</Project>
-      <Name>ExMan.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExMan.DTO\ExMan.DTO.csproj">
-      <Project>{475722B6-B231-4901-B227-709D682B9591}</Project>
-      <Name>ExMan.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExMan.Entities\ExMan.Entities.csproj">
-      <Project>{258F56D4-2906-4A94-A0DF-C78AD3A52E36}</Project>
-      <Name>ExMan.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExMan.Shared\ExMan.Shared.csproj">
-      <Project>{4EE60A74-9715-4D61-82EF-545814CE19C9}</Project>
-      <Name>ExMan.Shared</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
