@@ -54,9 +54,9 @@
       <Project>{97ae79ac-c935-4de3-8ae4-82bb2609788b}</Project>
       <Name>ExMan.Client.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ExMan.Client.Shared\ExMan.Client.Shared.csproj">
+    <ProjectReference Include="..\ExMan.Client.Shared\ExMan.Client.Core.csproj">
       <Project>{f1c7b4b0-7b6f-4992-8ef4-c1e992d8999c}</Project>
-      <Name>ExMan.Client.Shared</Name>
+      <Name>ExMan.Client.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -23,6 +23,7 @@ namespace ExMan.Desktop.Client
         public void Initialize()
         {
             container.RegisterTypeForNavigation<Login>();
+            container.RegisterTypeForNavigation<Home>();
         }
     }
 }

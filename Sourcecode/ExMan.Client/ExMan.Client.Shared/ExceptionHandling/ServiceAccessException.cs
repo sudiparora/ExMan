@@ -1,11 +1,11 @@
-﻿using ExMan.Client.Shared.Core.ExceptionHandling;
+﻿using ExMan.Client.Core.ExceptionHandling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExMan.Client.Shared.Core
+namespace ExMan.Client.Core
 {
     public class ServiceAccessException: BaseException
     {

@@ -175,13 +175,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExMan.Client.Model\ExMan.Client.Model.csproj">
+      <Project>{F1F8619E-8DAF-4398-A738-BC96A0AECFBD}</Project>
+      <Name>ExMan.Client.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExMan.Client.Services\ExMan.Client.Services.csproj">
       <Project>{97AE79AC-C935-4DE3-8AE4-82BB2609788B}</Project>
       <Name>ExMan.Client.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ExMan.Client.Shared\ExMan.Client.Shared.csproj">
+    <ProjectReference Include="..\ExMan.Client.Shared\ExMan.Client.Core.csproj">
       <Project>{F1C7B4B0-7B6F-4992-8EF4-C1E992D8999C}</Project>
-      <Name>ExMan.Client.Shared</Name>
+      <Name>ExMan.Client.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExMan.Desktop.Resources\ExMan.Desktop.Resources.csproj">
       <Project>{bd2899c1-cd1e-4bbf-a5e8-f6ed20ee9794}</Project>

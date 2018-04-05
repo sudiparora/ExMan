@@ -1,4 +1,4 @@
-﻿using ExMan.Client.Shared.Core;
+﻿using ExMan.Client.Core;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -13,20 +13,39 @@ namespace ExMan.Client.Services
     public class RestClient
     {
 
-        public async Task<ResponseModel<T>> ExecuteLogin<T>(string baseUri, string requestUrl)
+        public async Task<ResponseModel<T>> ExecuteLogin<T>(string baseUri, string requestUri)
         {
             ResponseModel<T> responseObject = new ResponseModel<T>();
             try
             {
                 RestSharp.RestClient restClient = new RestSharp.RestClient(baseUri);
                 RestRequest restRequest = new RestRequest("/Token", Method.POST);
-                string encodedBody = requestUrl;
+                string encodedBody = requestUri;
                 restRequest.AddParameter("application/x-www-form-urlencoded", encodedBody, ParameterType.RequestBody);
                 restRequest.AddParameter("Content-Type", "application/x-www-form-urlencoded", ParameterType.HttpHeader);
-                //var response = await restClient.ExecuteTaskAsync(restRequest);
+                var response = await restClient.ExecuteTaskAsync(restRequest);
+                //var response = restClient.Execute(restRequest);
+                responseObject = ProcessResponse(responseObject, response);
+            }
+            catch (Exception ex)
+            {
 
-                var response = restClient.Execute(restRequest);
+            }
+            return responseObject;
+        }
 
+        public async Task<ResponseModel<T>> Execute<T>(string baseUri, string requestUri)
+        {
+            ResponseModel<T> responseObject = new ResponseModel<T>();
+            try
+            {
+                RestSharp.RestClient restClient = new RestSharp.RestClient(baseUri);
+                restClient.AddDefaultHeader("Authorization", string.Format("bearer: {0}", TokenManager.Instance.GetBearerToken));
+                RestRequest restRequest = new RestRequest(requestUri, Method.GET);
+                //restRequest.AddHeader("Authorization", string.Format("bearer: {0}", TokenManager.Instance.GetBearerToken));
+                //request.AddHeader("Accept", "application/json");
+                //request.AddParameter("application/json",
+                var response = await restClient.ExecuteTaskAsync(restRequest);
                 responseObject = ProcessResponse(responseObject, response);
             }
             catch (Exception ex)

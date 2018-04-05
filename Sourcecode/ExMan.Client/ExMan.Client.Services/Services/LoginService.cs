@@ -1,12 +1,13 @@
 ﻿using ExMan.Client.Services.Base;
 using ExMan.Client.Services.Entities;
-using ExMan.Client.Shared.Core;
+using ExMan.Client.Core;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExMan.Client.Model.Login;
 
 namespace ExMan.Client.Services
 {
@@ -29,9 +30,9 @@ namespace ExMan.Client.Services
 
         #region Methods
 
-        public async Task<ResponseModel<string>> LoginAndFetchBearerToken(string username, string password)
+        public async Task<ResponseModel<BearerTokenModel>> LoginAndFetchBearerToken(string username, string password)
         {
-            ResponseModel<string> tokenResponse = null;
+            ResponseModel<BearerTokenModel> tokenResponse = null;
             try
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -46,15 +47,19 @@ namespace ExMan.Client.Services
                 {
                     if (bearerTokenResponse.ErrorCode == 0)
                     {
-                        tokenResponse = new ResponseModel<string>
+                        tokenResponse = new ResponseModel<BearerTokenModel>
                         {
                             ServiceOperationResult = ServiceOperationResult.Success,
-                            Data = bearerTokenResponse.Data.AccessToken
+                            Data = new BearerTokenModel
+                            {
+                                AccessToken = bearerTokenResponse.Data.AccessToken,
+                                ExpiryDate = DateTime.Now + new TimeSpan(14, 0, 0, 0)
+                            }
                         };
                     }
                     else
                     {
-                        tokenResponse = new ResponseModel<string>
+                        tokenResponse = new ResponseModel<BearerTokenModel>
                         {
                             ServiceOperationResult = ServiceOperationResult.Failure
                         };
@@ -62,16 +67,16 @@ namespace ExMan.Client.Services
                 }
                 else
                 {
-                    tokenResponse = new ResponseModel<string> { ServiceOperationResult = bearerTokenResponse.ServiceOperationResult };
+                    tokenResponse = new ResponseModel<BearerTokenModel> { ServiceOperationResult = bearerTokenResponse.ServiceOperationResult };
                 }
             }
             catch (ServiceAccessException)
             {
-                tokenResponse = new ResponseModel<string> { ServiceOperationResult = ServiceOperationResult.Failure };
+                tokenResponse = new ResponseModel<BearerTokenModel> { ServiceOperationResult = ServiceOperationResult.Failure };
             }
             catch (Exception ex)
             {
-                tokenResponse = new ResponseModel<string> { ServiceOperationResult = ServiceOperationResult.Failure };
+                tokenResponse = new ResponseModel<BearerTokenModel> { ServiceOperationResult = ServiceOperationResult.Failure };
             }
             return tokenResponse;
         }

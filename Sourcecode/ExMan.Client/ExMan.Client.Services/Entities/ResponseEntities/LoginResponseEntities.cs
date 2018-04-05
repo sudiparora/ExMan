@@ -23,4 +23,10 @@ namespace ExMan.Client.Services.Entities
         [JsonProperty("error")]
         public string Error { get; set; }
     }
+
+    public class ComponentType
+    {
+        public string ComponentTypeCode { get; set; }
+        public string ComponentTypeName { get; set; }
+    }
 }

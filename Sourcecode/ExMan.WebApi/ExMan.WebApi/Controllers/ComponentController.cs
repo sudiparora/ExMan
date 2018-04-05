@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ExMan.Business.BDC;
+using ExMan.DTO;
+using ExMan.Shared.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,6 +14,6 @@ namespace ExMan.WebApi.Controllers
     [RoutePrefix("api/Component")]
     public class ComponentController : ApiController
     {
-
+        
     }
 }

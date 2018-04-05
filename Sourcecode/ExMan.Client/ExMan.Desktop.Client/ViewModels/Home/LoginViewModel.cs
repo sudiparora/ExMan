@@ -1,5 +1,5 @@
 ﻿using ExMan.Client.Services;
-using ExMan.Client.Shared.Core;
+using ExMan.Client.Core;
 using ExMan.Desktop.Client.Core;
 using ExMan.Desktop.Client.Core.Helpers;
 using Prism.Commands;
@@ -9,6 +9,8 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using ExMan.Client.Model.Login;
+using ExMan.Client.Model.Components;
 
 namespace ExMan.Desktop.Client.ViewModels
 {
@@ -19,7 +21,7 @@ namespace ExMan.Desktop.Client.ViewModels
 
         private string username;
         private LoginService loginService;
-
+        private UserService userService;
 
         public DelegateCommand LoginCommand { get; private set; }
         public SecureString SecurePassword { private get; set; }
@@ -34,16 +36,30 @@ namespace ExMan.Desktop.Client.ViewModels
 
         #region Methods
 
-        public LoginViewModel(LoginService loginService)
+        public LoginViewModel(LoginService loginService, UserService userService)
         {
             LoginCommand = new DelegateCommand(LoginCommandExecute);
             this.loginService = loginService;
+            this.userService = userService;
         }
 
         private async void LoginCommandExecute()
         {
-            ResponseModel<string> bearerToken = await loginService.LoginAndFetchBearerToken(Username, 
+            ResponseModel<BearerTokenModel> bearerTokenResponse = await loginService.LoginAndFetchBearerToken(Username, 
                         PasswordHelper.Encrypt(SecurePassword.ConvertSecureStringToString()));
+            if (bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success && bearerTokenResponse.Data != null)
+            {
+                TokenManager.Instance.InitializeTokenSettings(bearerTokenResponse.Data);
+                ResponseModel<List<ComponentTypeModel>> componentTypesResponse = await userService.GetAvailableComponentTypes();
+                if (componentTypesResponse.ServiceOperationResult == ServiceOperationResult.Success)
+                {
+                    RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.LoginView, UriKind.Relative), NavigationCompleted);
+                }
+            }
+            else
+            {
+
+            }
         }
 
         #endregion

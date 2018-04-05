@@ -10,24 +10,25 @@ namespace ExMan.Business.BDC
 {
     public class UserBDC : BDCBase
     {
-        public List<ComponentTypeDTO> GetAuthorizedComponentsForUser(string username)
+        public OperationResult<List<ComponentTypeDTO>> GetAuthorizedComponentsForUser(string username)
         {
-            List<ComponentTypeDTO> componentTypes = new List<ComponentTypeDTO>();
             try
             {
                 OperationResult<List<ComponentType>> componentTypesResult = DependencyFactory.Resolve<UserDAC>().GetAuthorizedComponentsForUser(username);
                 if (componentTypesResult.IsSuccessful)
                 {
-                    componentTypes = Mapper.Map<List<ComponentType>, List<ComponentTypeDTO>>(componentTypesResult.Result);
+                    return OperationResult<List<ComponentTypeDTO>>.ReturnSuccessResult
+                        (Mapper.Map<List<ComponentType>, List<ComponentTypeDTO>>(componentTypesResult.Result));
                 }
                 else
-                { }
+                {
+                    return OperationResult<List<ComponentTypeDTO>>.ReturnFailureResult();
+                }
             }
             catch(Exception ex)
             {
-                componentTypes = null;
+                return OperationResult<List<ComponentTypeDTO>>.LogAndReturnFailureResult(ex);
             }
-            return componentTypes;
         }
     }
 }

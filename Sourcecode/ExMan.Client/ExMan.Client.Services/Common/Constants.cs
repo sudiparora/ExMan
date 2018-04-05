@@ -20,4 +20,11 @@ namespace ExMan.Client.Services
         public const string PASSWORD = "password";
         public const string GRANT_TYPE = "grant_type";
     }
+
+    public struct UserAPIConstants
+    {
+        public const string GETCOMPONENTTYPESAPI = "api/user/GetAuthroizedComponentsForUser?";
+        public const string USERNAME = "username";
+
+    }
 }

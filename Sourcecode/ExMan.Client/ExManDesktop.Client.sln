@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Desktop.Client", "ExM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Client.Services", "ExMan.Client.Services\ExMan.Client.Services.csproj", "{97AE79AC-C935-4DE3-8AE4-82BB2609788B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Client.Shared", "ExMan.Client.Shared\ExMan.Client.Shared.csproj", "{F1C7B4B0-7B6F-4992-8EF4-C1E992D8999C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Client.Core", "ExMan.Client.Shared\ExMan.Client.Core.csproj", "{F1C7B4B0-7B6F-4992-8EF4-C1E992D8999C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Client.Model", "ExMan.Client.Model\ExMan.Client.Model.csproj", "{F1F8619E-8DAF-4398-A738-BC96A0AECFBD}"
 EndProject

@@ -1,4 +1,4 @@
-﻿using ExMan.Client.Shared.Core;
+﻿using ExMan.Client.Core;
 using ExMan.Desktop.Client.Core;
 using Prism.Commands;
 using System;

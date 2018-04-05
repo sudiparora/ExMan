@@ -14,5 +14,6 @@ namespace ExMan.Desktop.Client.Core
     public struct ViewNames
     {
         public static string LoginView = "Login";
+        public static string HomeView = "Home";
     }
 }

@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\ModelBase.cs" />
+    <Compile Include="Components\ComponentTypeModel.cs" />
+    <Compile Include="Login\BearerTokenModel.cs" />
     <Compile Include="Login\LoginModel.cs" />
     <Compile Include="Login\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
