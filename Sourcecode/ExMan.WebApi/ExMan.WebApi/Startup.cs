@@ -13,9 +13,6 @@ namespace ExMan.WebApi
     {
         public void Configuration(IAppBuilder app)
         {
-            var config = new HttpConfiguration();
-            WebApiConfig.Register(config);
-            app.UseWebApi(config);
             ConfigureAuth(app);
         }
     }

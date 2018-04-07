@@ -50,7 +50,7 @@ namespace ExMan.Desktop.Client.ViewModels
             if (bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success && bearerTokenResponse.Data != null)
             {
                 TokenManager.Instance.InitializeTokenSettings(bearerTokenResponse.Data);
-                ResponseModel<List<ComponentTypeModel>> componentTypesResponse = await userService.GetAvailableComponentTypes();
+                ResponseModel<List<ComponentTypeModel>> componentTypesResponse = await userService.GetAvailableComponentTypes(Username);
                 if (componentTypesResponse.ServiceOperationResult == ServiceOperationResult.Success)
                 {
                     RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.LoginView, UriKind.Relative), NavigationCompleted);

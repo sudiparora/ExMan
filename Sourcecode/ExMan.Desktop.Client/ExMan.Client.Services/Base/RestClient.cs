@@ -40,7 +40,7 @@ namespace ExMan.Client.Services
             try
             {
                 RestSharp.RestClient restClient = new RestSharp.RestClient(baseUri);
-                restClient.AddDefaultHeader("Authorization", string.Format("bearer: {0}", TokenManager.Instance.GetBearerToken));
+                restClient.AddDefaultHeader("Authorization", string.Format("Bearer {0}", TokenManager.Instance.GetBearerToken));
                 RestRequest restRequest = new RestRequest(requestUri, Method.GET);
                 //restRequest.AddHeader("Authorization", string.Format("bearer: {0}", TokenManager.Instance.GetBearerToken));
                 //request.AddHeader("Accept", "application/json");

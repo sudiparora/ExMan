@@ -15,7 +15,6 @@ namespace ExMan.WebApi.Controllers
     public class UserController : ApiController
     {
 
-        [HttpGet]
         public OperationResult<List<ComponentTypeDTO>> GetAuthroizedComponentsForUser(string username)
         {
             return DependencyFactory.Resolve<UserBDC>().GetAuthorizedComponentsForUser(username);

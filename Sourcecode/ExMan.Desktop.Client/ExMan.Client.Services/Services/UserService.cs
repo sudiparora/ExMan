@@ -23,13 +23,13 @@ namespace ExMan.Client.Services
 
         #endregion
 
-        public async Task<ResponseModel<List<ComponentTypeModel>>> GetAvailableComponentTypes()
+        public async Task<ResponseModel<List<ComponentTypeModel>>> GetAvailableComponentTypes(string username)
         {
             ResponseModel<List<ComponentTypeModel>> componentTypes = null;
             try
             {
                 Dictionary<string, string> parameters = new Dictionary<string, string>();
-                parameters[UserAPIConstants.USERNAME] = UserSettings.Default.LoggedInUsername;
+                parameters[UserAPIConstants.USERNAME] = username;
                 string requestURI = UserAPIConstants.GETCOMPONENTTYPESAPI + GenerateQueryStringFromParameters(parameters);
                 ResponseModel<List<ComponentType>> componentTypesResponse =
                     await RestClientInstance.Execute<List<ComponentType>>(ConfigurationManager.AppSettings[ServiceConstants.APIEndPoint], requestURI);

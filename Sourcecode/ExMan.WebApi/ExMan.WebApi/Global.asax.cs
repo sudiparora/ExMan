@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExMan.Shared.Core.AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +20,7 @@ namespace ExMan.WebApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
+            AutoMapperConfiguration.Instance.InitializeAutoMapper();
         }
     }
 }
