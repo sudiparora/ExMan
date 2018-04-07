@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ExMan.DTO;
+using ExMan.Shared.DTO;
 using ExMan.Entities;
 using System;
 using System.Collections.Generic;

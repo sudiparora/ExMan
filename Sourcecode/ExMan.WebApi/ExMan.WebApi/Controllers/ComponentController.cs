@@ -1,5 +1,4 @@
 ﻿using ExMan.Business.BDC;
-using ExMan.DTO;
 using ExMan.Shared.Core;
 using System;
 using System.Collections.Generic;

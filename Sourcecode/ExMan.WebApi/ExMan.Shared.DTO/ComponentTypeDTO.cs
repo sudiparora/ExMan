@@ -1,6 +1,6 @@
-﻿using ExMan.DTO.Base;
+﻿using ExMan.Shared.DTO.Base;
 
-namespace ExMan.DTO
+namespace ExMan.Shared.DTO
 {
     public class ComponentTypeDTO: DTOBase
     {

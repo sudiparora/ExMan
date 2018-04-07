@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ExMan.DataAccess.DAC;
-using ExMan.DTO;
+using ExMan.Shared.DTO;
 using ExMan.Entities;
 using ExMan.Shared.Core;
 using System;
