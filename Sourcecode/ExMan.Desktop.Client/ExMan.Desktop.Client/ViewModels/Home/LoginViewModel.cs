@@ -1,16 +1,12 @@
-﻿using ExMan.Client.Services;
-using ExMan.Client.Core;
+﻿using ExMan.Client.Core;
+using ExMan.Client.Services;
 using ExMan.Desktop.Client.Core;
 using ExMan.Desktop.Client.Core.Helpers;
+using ExMan.Shared.DTO;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using ExMan.Client.Model.Login;
-using ExMan.Client.Model.Components;
 
 namespace ExMan.Desktop.Client.ViewModels
 {
@@ -45,12 +41,12 @@ namespace ExMan.Desktop.Client.ViewModels
 
         private async void LoginCommandExecute()
         {
-            ResponseModel<BearerTokenModel> bearerTokenResponse = await loginService.LoginAndFetchBearerToken(Username, 
+            ResponseModel<BearerTokenDTO> bearerTokenResponse = await loginService.LoginAndFetchBearerToken(Username, 
                         PasswordHelper.Encrypt(SecurePassword.ConvertSecureStringToString()));
             if (bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success && bearerTokenResponse.Data != null)
             {
-                TokenManager.Instance.InitializeTokenSettings(bearerTokenResponse.Data);
-                ResponseModel<List<ComponentTypeModel>> componentTypesResponse = await userService.GetAvailableComponentTypes(Username);
+                //TokenManager.Instance.InitializeTokenSettings(bearerTokenResponse.Data);
+                ResponseModel<List<ComponentTypeDTO>> componentTypesResponse = await userService.GetAvailableComponentTypes();
                 if (componentTypesResponse.ServiceOperationResult == ServiceOperationResult.Success)
                 {
                     RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.LoginView, UriKind.Relative), NavigationCompleted);

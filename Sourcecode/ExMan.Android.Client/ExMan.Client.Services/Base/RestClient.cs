@@ -49,6 +49,7 @@ namespace ExMan.Client.Services.Base
                     client.Timeout = new TimeSpan(0, 0, 30);
                     client.BaseAddress = new Uri(baseUri);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer {0}");
                     response = await client.GetAsync(requestUri).ConfigureAwait(false);
                     responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
                 }

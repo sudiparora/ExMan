@@ -5,11 +5,9 @@ using ExMan.Client.Services.Entities;
 using ExMan.Shared.DTO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace ExMan.Client.Services.Services
+namespace ExMan.Client.Services
 {
     public class LoginService : ServiceBase
     {
