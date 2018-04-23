@@ -20,14 +20,32 @@ namespace ExMan.Client.Services.Base
             {
                 using (HttpClient client = new HttpClient())
                 {
+                    //client.Timeout = new TimeSpan(0, 0, 30);
+                    //client.BaseAddress = new Uri(baseUri);
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    ////client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
+                    //var content = new List<KeyValuePair<string, string>>();
+                    //content.Add(new KeyValuePair<string, string>("application/x-www-form-urlencoded", requestUri));
+
+                    //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/Token?")
+                    //{
+                    //    Content = new FormUrlEncodedContent(content)
+                    //};
+                    ////request.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    //var response = await client.SendAsync(request);
+                    //responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
+
                     client.Timeout = new TimeSpan(0, 0, 30);
                     client.BaseAddress = new Uri(baseUri);
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
-                    var content = new List<KeyValuePair<string, string>>();
-                    content.Add(new KeyValuePair<string, string>("application/x-www-form-urlencoded", requestUri));
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = new FormUrlEncodedContent(content) };
-                    var response = await client.SendAsync(request);
+                    var tokenModel = new Dictionary<string, string>
+                    {
+                        {"grant_type", "password"},
+                        {"username", "sudip.arora@gmail.com"},
+                        {"password", "FKUp46O0s/8XGrlZ5zYPrg=="},
+                    };
+
+                    var response = await client.PostAsync("Token", new FormUrlEncodedContent(tokenModel));
                     responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
                 }
             }
