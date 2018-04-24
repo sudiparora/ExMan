@@ -209,15 +209,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ExMan.Android.Client\ExMan.Client.Core\ExMan.Client.Core.csproj">
+    <ProjectReference Include="..\..\ExMan.Common\ExMan.Client.Core\ExMan.Client.Core.csproj">
       <Project>{A83048CB-3F45-452A-824D-6A39E823EAEB}</Project>
       <Name>ExMan.Client.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ExMan.Android.Client\ExMan.Client.Services\ExMan.Client.Services.csproj">
+    <ProjectReference Include="..\..\ExMan.Common\ExMan.Client.Services\ExMan.Client.Services.csproj">
       <Project>{069A1245-B405-4602-9B49-A9F988BB738B}</Project>
       <Name>ExMan.Client.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ExMan.WebApi\ExMan.Shared.DTO\ExMan.Shared.DTO.csproj">
+    <ProjectReference Include="..\..\ExMan.Common\ExMan.Shared.DTO\ExMan.Shared.DTO.csproj">
       <Project>{DF1932D4-D961-4A01-9504-4B7846802615}</Project>
       <Name>ExMan.Shared.DTO</Name>
     </ProjectReference>

@@ -293,13 +293,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ExMan.Common\ExMan.Shared.DTO\ExMan.Shared.DTO.csproj">
+      <Project>{DF1932D4-D961-4A01-9504-4B7846802615}</Project>
+      <Name>ExMan.Shared.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExMan.Business\ExMan.Business.csproj">
       <Project>{DC71CAFE-5A16-4D9A-9B46-C655428B3037}</Project>
       <Name>ExMan.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExMan.Shared.DTO\ExMan.Shared.DTO.csproj">
-      <Project>{DF1932D4-D961-4A01-9504-4B7846802615}</Project>
-      <Name>ExMan.Shared.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExMan.Shared\ExMan.Shared.csproj">
       <Project>{4EE60A74-9715-4D61-82EF-545814CE19C9}</Project>
