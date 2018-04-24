@@ -45,11 +45,13 @@ namespace ExMan.Desktop.Client.ViewModels
                         PasswordHelper.Encrypt(SecurePassword.ConvertSecureStringToString()));
             if (bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success && bearerTokenResponse.Data != null)
             {
+                UserSettings.Default.BearerToken = bearerTokenResponse.Data.AccessToken;
+                UserSettings.Default.BearerTokenExpiry = bearerTokenResponse.Data.ExpiryDate;
                 //TokenManager.Instance.InitializeTokenSettings(bearerTokenResponse.Data);
                 ResponseModel<List<ComponentTypeDTO>> componentTypesResponse = await userService.GetAvailableComponentTypes();
                 if (componentTypesResponse.ServiceOperationResult == ServiceOperationResult.Success)
                 {
-                    RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.LoginView, UriKind.Relative), NavigationCompleted);
+                    RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.HomeView, UriKind.Relative), NavigationCompleted);
                 }
             }
             else

@@ -1,10 +1,8 @@
 ﻿using ExMan.Client.Core;
-using ExMan.Client.Core.ExceptionHandling;
 using ExMan.Client.Services.Base;
 using ExMan.Client.Services.Entities;
 using ExMan.Shared.DTO;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ExMan.Client.Services
@@ -12,36 +10,24 @@ namespace ExMan.Client.Services
     public class LoginService : ServiceBase
     {
 
-        #region Fields & Properties
-
-        private const string GRANT_TYPE_VALUE = "password";
-
-        #endregion
-
-
         #region CTOR
 
         public LoginService(RestClient restClient)
             : base(restClient)
-        {
-        }
+        { }
 
         #endregion
 
         #region Methods
 
-        public async Task<ResponseModel<BearerTokenDTO>> LoginAndFetchBearerToken(string username, string password)
+        public async Task<ResponseModel<BearerTokenDTO>> LoginAndFetchBearerToken(string username, string encryptedPassword)
         {
             ResponseModel<BearerTokenDTO> tokenResponse = null;
             try
             {
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
-                parameters[LoginAPIConstants.USERNAME] = username;
-                parameters[LoginAPIConstants.PASSWORD] = password;
-                parameters[LoginAPIConstants.GRANT_TYPE] = GRANT_TYPE_VALUE;
-                string requestURI = GenerateQueryStringFromParameters(parameters);
                 ResponseModel<BearerToken> bearerTokenResponse = await RestClientInstance.ExecuteLogin<BearerToken>(
-                    LocatorService.ConfigurationManager.GetConfigurations().AppSettings[ServiceConstants.APIEndPoint].ToString(), requestURI);
+                    LocatorService.ConfigurationManager.GetConfigurations().AppSettings[ServiceConstants.APIEndPoint].ToString(),
+                    username, encryptedPassword);
 
                 if (bearerTokenResponse != null && bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success)
                 {
@@ -56,6 +42,7 @@ namespace ExMan.Client.Services
                                 ExpiryDate = DateTime.Now + new TimeSpan(14, 0, 0, 0)
                             }
                         };
+                        LocatorService.Logger.LogInfo("New Access Token Generated for {0} at {1}", username, DateTime.Now.ToString());
                     }
                     else
                     {
@@ -70,13 +57,10 @@ namespace ExMan.Client.Services
                     tokenResponse = new ResponseModel<BearerTokenDTO> { ServiceOperationResult = bearerTokenResponse.ServiceOperationResult };
                 }
             }
-            catch (ServiceAccessException)
-            {
-                tokenResponse = new ResponseModel<BearerTokenDTO> { ServiceOperationResult = ServiceOperationResult.Failure };
-            }
             catch (Exception ex)
             {
-                tokenResponse = new ResponseModel<BearerTokenDTO> { ServiceOperationResult = ServiceOperationResult.Failure };
+                LocatorService.Logger.LogError("Login API failed", ex);
+                tokenResponse = new ResponseModel<BearerTokenDTO> { ServiceOperationResult = ServiceOperationResult.Error };
             }
             return tokenResponse;
         }

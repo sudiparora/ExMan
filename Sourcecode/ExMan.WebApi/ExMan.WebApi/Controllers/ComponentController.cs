@@ -1,10 +1,7 @@
 ﻿using ExMan.Business.BDC;
 using ExMan.Shared.Core;
-using System;
+using ExMan.Shared.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ExMan.WebApi.Controllers
@@ -13,6 +10,10 @@ namespace ExMan.WebApi.Controllers
     [RoutePrefix("api/Component")]
     public class ComponentController : ApiController
     {
-        
+
+        public List<ComponentTypeDTO> GetAuthorizedComponentsForUser()
+        {
+            return DependencyFactory.Resolve<UserBDC>().GetAuthorizedComponentsForUser(RequestContext.Principal.Identity.Name).Result;
+        }
     }
 }

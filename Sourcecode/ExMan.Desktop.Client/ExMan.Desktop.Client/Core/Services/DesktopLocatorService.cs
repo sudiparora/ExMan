@@ -14,6 +14,8 @@ namespace ExMan.Desktop.Client.Core
         public DesktopLocatorService()
         {
             SimpleIoc.Default.Register<IConfigurationManager, DesktopConfigurationManager>();
+            SimpleIoc.Default.Register<ILogger, DesktopLogger>();
+            SimpleIoc.Default.Register<IUserSettingsManager, DesktopUserSettingsManager>();
         }
 
     }

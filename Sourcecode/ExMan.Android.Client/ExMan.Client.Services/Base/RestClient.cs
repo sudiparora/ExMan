@@ -1,57 +1,53 @@
-﻿using System;
+﻿using ExMan.Client.Core;
+using ExMan.Client.Core.ExceptionHandling;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using ExMan.Client.Core;
+using System.Threading.Tasks;
 
 namespace ExMan.Client.Services.Base
 {
     public class RestClient
     {
 
-        public async Task<ResponseModel<T>> ExecuteLogin<T>(string baseUri, string requestUri)
+        //client.Timeout = new TimeSpan(0, 0, 30);
+        //client.BaseAddress = new Uri(baseUri);
+        //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        ////client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
+        //var content = new List<KeyValuePair<string, string>>();
+        //content.Add(new KeyValuePair<string, string>("application/x-www-form-urlencoded", requestUri));
+
+        //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/Token?")
+        //{
+        //    Content = new FormUrlEncodedContent(content)
+        //};
+        ////request.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+        //var response = await client.SendAsync(request);
+        //responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
+
+
+        public async Task<ResponseModel<T>> ExecuteLogin<T>(string baseUri, string username, string encryptedPassword)
         {
             ResponseModel<T> responseObject = new ResponseModel<T>();
-            try
+            using (HttpClient client = new HttpClient())
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    //client.Timeout = new TimeSpan(0, 0, 30);
-                    //client.BaseAddress = new Uri(baseUri);
-                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    ////client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
-                    //var content = new List<KeyValuePair<string, string>>();
-                    //content.Add(new KeyValuePair<string, string>("application/x-www-form-urlencoded", requestUri));
 
-                    //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/Token?")
-                    //{
-                    //    Content = new FormUrlEncodedContent(content)
-                    //};
-                    ////request.Content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    //var response = await client.SendAsync(request);
-                    //responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
-
-                    client.Timeout = new TimeSpan(0, 0, 30);
-                    client.BaseAddress = new Uri(baseUri);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var tokenModel = new Dictionary<string, string>
+                client.Timeout = new TimeSpan(0, 0, 30);
+                client.BaseAddress = new Uri(baseUri);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var tokenModel = new Dictionary<string, string>
                     {
-                        {"grant_type", "password"},
-                        {"username", "sudip.arora@gmail.com"},
-                        {"password", "FKUp46O0s/8XGrlZ5zYPrg=="},
+                        {LoginAPIConstants.GRANT_TYPE, LoginAPIConstants.PASSWORD},
+                        {LoginAPIConstants.USERNAME, username},
+                        {LoginAPIConstants.PASSWORD, encryptedPassword},
                     };
 
-                    var response = await client.PostAsync("Token", new FormUrlEncodedContent(tokenModel));
-                    responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-
+                var response = await client.PostAsync(LoginAPIConstants.LOGINWITHBEARERTOKENAPI, new FormUrlEncodedContent(tokenModel));
+                responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
             }
             return responseObject;
         }
@@ -59,21 +55,16 @@ namespace ExMan.Client.Services.Base
         public async Task<ResponseModel<T>> Execute<T>(string baseUri, string requestUri)
         {
             ResponseModel<T> responseObject = new ResponseModel<T>();
-            try
+            HttpResponseMessage response = new HttpResponseMessage();
+            using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = new HttpResponseMessage();
-                using (HttpClient client = new HttpClient())
-                {
-                    client.Timeout = new TimeSpan(0, 0, 30);
-                    client.BaseAddress = new Uri(baseUri);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer {0}");
-                    response = await client.GetAsync(requestUri).ConfigureAwait(false);
-                    responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
-                }
+                client.Timeout = new TimeSpan(0, 0, 30);
+                client.BaseAddress = new Uri(baseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", LocatorService.UserSettingsManager.GetBearerToken());
+                response = await client.GetAsync(requestUri).ConfigureAwait(false);
+                responseObject = await ProcessResponse(responseObject, response).ConfigureAwait(false);
             }
-            catch (Exception ex)
-            { }
             return responseObject;
         }
 

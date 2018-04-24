@@ -71,6 +71,10 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
@@ -124,6 +128,8 @@
     <Compile Include="Core\Helpers\ExtensionMethods.cs" />
     <Compile Include="Core\Helpers\PasswordHelper.cs" />
     <Compile Include="Core\Services\DesktopLocatorService.cs" />
+    <Compile Include="Core\Services\DesktopLogger.cs" />
+    <Compile Include="Core\Services\DesktopUserSettingsManager.cs" />
     <Compile Include="Core\ViewModelBase.cs" />
     <Compile Include="ExManClientModule.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />

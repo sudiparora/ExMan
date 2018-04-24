@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\IConfigurationManager.cs" />
+    <Compile Include="Base\ILogger.cs" />
+    <Compile Include="Base\IUserSettingsManager.cs" />
     <Compile Include="Base\LocatorService.cs" />
     <Compile Include="Base\RestClient.cs" />
     <Compile Include="Base\ServiceBase.cs" />

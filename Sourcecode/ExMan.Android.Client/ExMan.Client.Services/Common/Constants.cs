@@ -13,8 +13,7 @@ namespace ExMan.Client.Services
 
     public struct LoginAPIConstants
     {
-
-        public const string LOGINWITHBEARERTOKENAPI = "/Token?";
+        public const string LOGINWITHBEARERTOKENAPI = "Token";
         public const string USERNAME = "username";
         public const string PASSWORD = "password";
         public const string GRANT_TYPE = "grant_type";
@@ -22,7 +21,7 @@ namespace ExMan.Client.Services
 
     public struct UserAPIConstants
     {
-        public const string GETCOMPONENTTYPESAPI = "api/user/GetAuthroizedComponentsForUser";
+        public const string GETCOMPONENTTYPESAPI = "api/component/GetAuthorizedComponentsForUser";
         public const string USERNAME = "username";
 
     }

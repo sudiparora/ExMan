@@ -12,7 +12,8 @@ namespace ExMan.Client.Services
 
         #region CTOR
 
-        public UserService(RestClient restClient) : base(restClient)
+        public UserService(RestClient restClient) 
+            : base(restClient)
         {
         }
 
@@ -38,7 +39,13 @@ namespace ExMan.Client.Services
                 }
             }
             catch (Exception ex)
-            { }
+            {
+                LocatorService.Logger.LogError("Fetching Component Types for User failed", ex);
+                componentTypes = new ResponseModel<List<ComponentTypeDTO>>
+                {
+                    ServiceOperationResult = ServiceOperationResult.Error
+                };
+            }
             return componentTypes;
         }
 
