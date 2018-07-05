@@ -137,6 +137,11 @@
     <Compile Include="Models\Login\BearerTokenModel.cs" />
     <Compile Include="Models\Login\LoginModel.cs" />
     <Compile Include="Models\Login\RegisterModel.cs" />
+    <Compile Include="Resources\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="UserSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -173,6 +178,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -220,10 +229,6 @@
     <ProjectReference Include="..\..\ExMan.Common\ExMan.Shared.DTO\ExMan.Shared.DTO.csproj">
       <Project>{DF1932D4-D961-4A01-9504-4B7846802615}</Project>
       <Name>ExMan.Shared.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExMan.Desktop.Resources\ExMan.Desktop.Resources.csproj">
-      <Project>{bd2899c1-cd1e-4bbf-a5e8-f6ed20ee9794}</Project>
-      <Name>ExMan.Desktop.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

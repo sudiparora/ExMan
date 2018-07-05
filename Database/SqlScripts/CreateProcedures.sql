@@ -5,12 +5,12 @@ GO
 
 CREATE PROCEDURE usp_FetchComponentsForUser
 (
-	@Username NVARCHAR(256)
+	@Usersub UNIQUEIDENTIFIER
 )
 AS
 BEGIN
-	DECLARE @UserID NVARCHAR(128)
-	SELECT @UserID = Id FROM tblUser WHERE Email = @Username
+	DECLARE @UserID UNIQUEIDENTIFIER
+	SELECT @UserID = Id FROM tblUser WHERE UUID = @Usersub
 	SELECT lstCT.ComponentTypeID,lstCT.ComponentTypeCode,lstCT.ComponentTypeName FROM lstComponentType lstCT 
 		INNER JOIN tblComponentUserMapping tCum ON lstCT.ComponentTypeID = tCum.ComponentTypeID
 		INNER JOIN tblUser tUser ON tCum.UserID = @UserID

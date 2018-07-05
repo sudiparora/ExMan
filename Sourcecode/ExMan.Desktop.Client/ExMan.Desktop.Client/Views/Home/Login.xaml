@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ExMan.Desktop.Client.Views"
         mc:Ignorable="d"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:resources="clr-namespace:ExMan.Desktop.Resources;assembly=ExMan.Desktop.Resources">
+        xmlns:resources="clr-namespace:ExMan.Desktop.Client.Resources">
     <Grid x:Name="BaseLayoutGrid">
         <Border x:Name="LoginBorder">
             <Grid>

@@ -1,10 +1,10 @@
 DECLARE @UserID VARCHAR(128)
-IF EXISTS(SELECT 1 FROM tblUser WHERE UserName = 'sudip.arora@gmail.com')
+IF EXISTS(SELECT 1 FROM tblUser WHERE UUID = '35c89528-bc06-4824-925b-e02134856353')
 BEGIN
-	SELECT @UserID = Id FROM tblUser WHERE UserName = 'sudip.arora@gmail.com'
+	SELECT @UserID = Id FROM tblUser WHERE UUID = '35c89528-bc06-4824-925b-e02134856353'
 
 	SET NOCOUNT ON
-	DECLARE @lstComponentTypeID INT
+	DECLARE @lstComponentTypeID UNIQUEIDENTIFIER
 	DECLARE cur_user_ComponentType CURSOR
 	STATIC FOR
 	SELECT ComponentTypeID FROM lstComponentType
