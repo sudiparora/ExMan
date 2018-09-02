@@ -12,6 +12,7 @@ namespace ExMan.AWS.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/User")]
+    
     public class UserController : Controller
     {
         [HttpGet]

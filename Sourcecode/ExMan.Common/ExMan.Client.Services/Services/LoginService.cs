@@ -20,6 +20,11 @@ namespace ExMan.Client.Services
 
         #region Methods
 
+        public async Task<ResponseModel<string>> Login(UserSignUpRequestDTO userSignUpRequest)
+        {
+
+        }
+
         public async Task<ResponseModel<BearerTokenDTO>> LoginAndFetchBearerToken(string username, string encryptedPassword)
         {
             ResponseModel<BearerTokenDTO> tokenResponse = null;

@@ -37,6 +37,7 @@
     <Compile Include="BearerTokenDTO.cs" />
     <Compile Include="ComponentTypeDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\UserSignUpRequestDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
