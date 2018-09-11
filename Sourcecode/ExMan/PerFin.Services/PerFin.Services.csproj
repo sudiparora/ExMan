@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PerFin.Business\PerFin.Business.csproj" />
+    <ProjectReference Include="..\PerFin.Core\PerFin.Core.csproj" />
+    <ProjectReference Include="..\PerFin.Entities\PerFin.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
