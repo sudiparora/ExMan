@@ -1,4 +1,5 @@
 ﻿using PerFin.Core;
+using PerFin.Core.Constants;
 using PerFin.Core.Contracts;
 using PerFin.DataAccess.Base;
 using PerFin.DataAccess.Core;
@@ -28,6 +29,25 @@ namespace PerFin.DataAccess.DAC
             catch (Exception ex)
             {
                 return Task.Run(() => OperationResult<List<ComponentType>>.LogAndReturnFailureResult(ex));
+            }
+        }
+
+        public Task<OperationResult<SessionInfo>> RegisterNewLogin(string username, string encryptedPassword, string deviceHash, DeviceType deviceType)
+        {
+            try
+            {
+                SqlCommand command = GetDbSprocCommand(SPConstants.SP_REGISTER_NEW_LOGIN);
+                command.Parameters.Add(CreateParameter("@Username", username));
+                command.Parameters.Add(CreateParameter("@PasswordHash", encryptedPassword));
+                command.Parameters.Add(CreateParameter("@DeviceHash", deviceHash));
+                command.Parameters.Add(CreateParameter("@DeviceTypeId", (int)deviceType));
+                command.Parameters.Add(CreateOutputParameter("@SessionId", System.Data.SqlDbType.VarChar));
+                command.Parameters.Add(CreateOutputParameter("@ErrorCode", System.Data.SqlDbType.Int));
+                return Task.Run(() => OperationResult<SessionInfo>.ReturnSuccessResult(GetSingleEntity<SessionInfo>(ref command)));
+            }
+            catch (Exception ex)
+            {
+                return Task.Run(() => OperationResult<SessionInfo>.LogAndReturnFailureResult(ex));
             }
         }
 

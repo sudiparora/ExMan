@@ -4,6 +4,8 @@
     {
 
         string DbConnectionString { get; }
+        string AWSUserPoolId { get; }
+        string AWSClientId { get; }
 
     }
 }

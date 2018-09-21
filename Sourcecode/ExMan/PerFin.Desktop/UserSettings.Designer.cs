@@ -12,7 +12,7 @@ namespace PerFin.Desktop {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
     internal sealed partial class UserSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static UserSettings defaultInstance = ((UserSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new UserSettings())));
@@ -26,23 +26,12 @@ namespace PerFin.Desktop {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string BearerToken {
+        public string SessionId {
             get {
-                return ((string)(this["BearerToken"]));
+                return ((string)(this["SessionId"]));
             }
             set {
-                this["BearerToken"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime BearerTokenExpiry {
-            get {
-                return ((global::System.DateTime)(this["BearerTokenExpiry"]));
-            }
-            set {
-                this["BearerTokenExpiry"] = value;
+                this["SessionId"] = value;
             }
         }
     }

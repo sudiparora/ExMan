@@ -15,5 +15,6 @@
     internal struct SPConstants
     {
         internal const string SP_FETCH_COMPONENTS_FOR_USER = "usp_FetchComponentsForUser";
+        internal const string SP_REGISTER_NEW_LOGIN = "usp_RegisterNewLogin";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PerFin.Core;
+using PerFin.Core.Constants;
 using PerFin.Core.Contracts;
 using PerFin.DataAccess.DAC;
 using PerFin.Entities.Authentication;
@@ -37,6 +38,26 @@ namespace PerFin.Business.BDC
             catch (Exception ex)
             {
                 return OperationResult<List<ComponentType>>.LogAndReturnFailureResult(ex);
+            }
+        }
+
+        public async Task<OperationResult<SessionInfo>> RegisterNewLogin(string username, string encryptedPassword, string deviceHash, DeviceType deviceType)
+        {
+            try
+            {
+                OperationResult<SessionInfo> registerNewLoginResult = await UserDACInstance.RegisterNewLogin(username, encryptedPassword, deviceHash, deviceType);
+                if (registerNewLoginResult.IsSuccessful && registerNewLoginResult.Result.ErrorCode == 0)
+                {
+                    return OperationResult<SessionInfo>.ReturnSuccessResult(registerNewLoginResult.Result);
+                }
+                else
+                {
+                    return OperationResult<SessionInfo>.ReturnFailureResult();
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<SessionInfo>.LogAndReturnFailureResult(ex);
             }
         }
 

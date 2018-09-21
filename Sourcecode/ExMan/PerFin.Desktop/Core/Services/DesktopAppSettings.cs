@@ -12,12 +12,30 @@ namespace PerFin.Desktop.Core
     {
 
         private const string DATABASECONNECTIONSTRING = "SqlDataConString";
+        private const string AWSUSERPOOLID = "USERPOOL_ID";
+        private const string AWSCLIENTID = "CLIENT_ID";
 
         public string DbConnectionString
         {
             get
             {
                 return ConfigurationManager.ConnectionStrings[DATABASECONNECTIONSTRING].ConnectionString;
+            }
+        }
+
+        public string AWSUserPoolId
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[AWSUSERPOOLID];
+            }
+        }
+
+        public string AWSClientId
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[AWSCLIENTID];
             }
         }
     }

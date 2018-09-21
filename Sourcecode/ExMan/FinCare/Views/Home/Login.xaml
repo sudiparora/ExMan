@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="FinCare.Views.Home.Login"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:resources="clr-namespace:FinCare.Resources">
+    <Grid x:Name="BaseLayoutGrid">
+        <Border x:Name="LoginBorder">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".7*"/>
+                    <ColumnDefinition Width=".3*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0"
+                       Source="..\..\Resources\Images\logo_blue.png"/>
+
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical"
+                            Margin="10">
+                    <TextBox mahAppsControls:TextBoxHelper.Watermark="{x:Static resources:Strings.Login_Username_Watermark}"
+                             Text="{Binding Username, Mode=TwoWay}"
+                             Margin="0 0 0 5"/>
+
+                    <PasswordBox mahAppsControls:PasswordBoxHelper.CapsLockWarningToolTip="{x:Static resources:Strings.Login_CapsLock_Warning}"
+                                 mahAppsControls:TextBoxHelper.Watermark="{x:Static resources:Strings.Login_Password_Watermark}"
+                                 PasswordChar="●"
+                                 PasswordChanged="PasswordBox_PasswordChanged"
+                                 Margin="0 0 0 5"/>
+
+                    <Button Style="{StaticResource AccentedSquareButtonStyle}"
+                            Content="{x:Static resources:Strings.Button_Login}"
+                            Command="{Binding LoginCommand}"/>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

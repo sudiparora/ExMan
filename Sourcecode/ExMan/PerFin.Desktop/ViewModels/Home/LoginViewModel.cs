@@ -1,4 +1,5 @@
-﻿using PerFin.Core.Services;
+﻿using PerFin.Core.Constants;
+using PerFin.Core.Services;
 using PerFin.Desktop.Core;
 using PerFin.Desktop.Core.Helpers;
 using PerFin.Entities.Authentication;
@@ -41,11 +42,11 @@ namespace PerFin.Desktop.ViewModels
 
         private async void LoginCommandExecute()
         {
-            ResponseModel<BearerTokenInfo> bearerTokenResponse = await loginService.LoginAndFetchBearerToken(Username, 
-                        PasswordHelper.Encrypt(SecurePassword.ConvertSecureStringToString()));
-            if (bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success && bearerTokenResponse.Data != null)
+            ResponseModel<SessionInfo> registerNewLoginResponse = await loginService.RegisterNewLogin(Username,
+                        PasswordHelper.Encrypt(SecurePassword.ConvertSecureStringToString()), DesktopHelper.GetDesktopDeviceId(), DeviceType.Desktop);
+            if (registerNewLoginResponse.ServiceOperationResult == ServiceOperationResult.Success && registerNewLoginResponse.Data != null)
             {
-                UserSettings.Default.BearerToken = bearerTokenResponse.Data.AccessToken;
+                UserSettings.Default.SessionId = registerNewLoginResponse.Data.SessionId;
                 //UserSettings.Default.BearerTokenExpiry = new DateTime()
                 //TokenManager.Instance.InitializeTokenSettings(bearerTokenResponse.Data);
                 ResponseModel<List<ComponentType>> componentTypesResponse = await userService.GetAvailableComponentTypes(Username);

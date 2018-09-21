@@ -1,4 +1,7 @@
-﻿using PerFin.Core.Contracts;
+﻿using PerFin.Business.BDC;
+using PerFin.Core;
+using PerFin.Core.Constants;
+using PerFin.Core.Contracts;
 using PerFin.Core.Services;
 using PerFin.Entities.Authentication;
 using PerFin.Services.Base;
@@ -9,48 +12,45 @@ namespace PerFin.Services
 {
     public class LoginService : ServiceBase
     {
-        public LoginService(RestClient restClient, ILogger logger) 
-            : base(restClient, logger)
-        { }
+        UserBDC UserBDCInstance { get; }
+        IAppSettings AppSettingsInstance { get; }
 
-        public async Task<ResponseModel<BearerTokenInfo>> LoginAndFetchBearerToken(string username, string encryptedPassword)
+        public LoginService(ILogger logger, IAppSettings iAppSettings, UserBDC userBDC)
+            : base(logger)
         {
-            ResponseModel<BearerTokenInfo> tokenResponse = null;
+            AppSettingsInstance = iAppSettings;
+            UserBDCInstance = userBDC;
+        }
+
+        public async Task<ResponseModel<SessionInfo>> RegisterNewLogin(string username, string encryptedPassword, string deviceHash, DeviceType deviceType)
+        {
+            ResponseModel<SessionInfo> registerNewLoginResponse = null;
             try
             {
-                ResponseModel<BearerTokenInfo> bearerTokenResponse = await RestClientInstance.ExecuteLogin<BearerTokenInfo>(
-                    string.Empty,username, encryptedPassword);
-
-                if (bearerTokenResponse != null && bearerTokenResponse.ServiceOperationResult == ServiceOperationResult.Success)
+                OperationResult<SessionInfo> sessionInfoResponse = await UserBDCInstance.RegisterNewLogin(username, encryptedPassword, deviceHash, deviceType);
+                if (sessionInfoResponse.IsSuccessful)
                 {
-                    if (bearerTokenResponse.ErrorCode == 0)
+                    registerNewLoginResponse = new ResponseModel<SessionInfo>
                     {
-                        tokenResponse = new ResponseModel<BearerTokenInfo>
-                        {
-                            ServiceOperationResult = ServiceOperationResult.Success,
-                            Data = bearerTokenResponse.Data
-                        };
-                        LoggerInstance.LogInfo("New Access Token Generated for {0} at {1}", username, DateTime.Now.ToString());
-                    }
-                    else
-                    {
-                        tokenResponse = new ResponseModel<BearerTokenInfo>
-                        {
-                            ServiceOperationResult = ServiceOperationResult.Failure
-                        };
-                    }
+                        ServiceOperationResult = ServiceOperationResult.Success,
+                        Data = sessionInfoResponse.Result
+                    };
+                    LoggerInstance.LogInfo("New Session Generated for {0} at {1}", username, DateTime.Now.ToString());
                 }
                 else
                 {
-                    tokenResponse = new ResponseModel<BearerTokenInfo> { ServiceOperationResult = bearerTokenResponse.ServiceOperationResult };
+                    registerNewLoginResponse = new ResponseModel<SessionInfo>
+                    {
+                        ServiceOperationResult = ServiceOperationResult.Failure
+                    };
                 }
             }
             catch (Exception ex)
             {
-                LoggerInstance.LogError("Login API failed", ex);
-                tokenResponse = new ResponseModel<BearerTokenInfo> { ServiceOperationResult = ServiceOperationResult.Error };
+                LoggerInstance.LogError("Register New Login failed", ex);
+                registerNewLoginResponse = new ResponseModel<SessionInfo> { ServiceOperationResult = ServiceOperationResult.Error };
             }
-            return tokenResponse;
+            return registerNewLoginResponse;
         }
 
     }
