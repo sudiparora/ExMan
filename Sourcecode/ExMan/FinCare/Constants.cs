@@ -14,6 +14,6 @@ namespace FinCare
     public struct ViewNames
     {
         public static string LoginView = "Login";
-        public static string HomeView = "Home";
+        public static string DashboardView = "Dashboard";
     }
 }

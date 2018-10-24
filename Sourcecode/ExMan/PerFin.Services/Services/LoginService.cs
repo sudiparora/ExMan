@@ -53,5 +53,36 @@ namespace PerFin.Services
             return registerNewLoginResponse;
         }
 
+        public async Task<ResponseModel<SessionInfo>> LoginExistingUser(string username, string encryptedPassword, string deviceHash, DeviceType deviceType)
+        {
+            ResponseModel<SessionInfo> loginExistingUserResponse = null;
+            try
+            {
+                OperationResult<SessionInfo> sessionInfoResponse = await UserBDCInstance.LoginExistingUser(username, encryptedPassword, deviceHash, deviceType);
+                if (sessionInfoResponse.IsSuccessful)
+                {
+                    loginExistingUserResponse = new ResponseModel<SessionInfo>
+                    {
+                        ServiceOperationResult = ServiceOperationResult.Success,
+                        Data = sessionInfoResponse.Result
+                    };
+                    LoggerInstance.LogInfo("New Session Generated for {0} at {1}", username, DateTime.Now.ToString());
+                }
+                else
+                {
+                    loginExistingUserResponse = new ResponseModel<SessionInfo>
+                    {
+                        ServiceOperationResult = ServiceOperationResult.Failure
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerInstance.LogError("Login Existing User failed", ex);
+                loginExistingUserResponse = new ResponseModel<SessionInfo> { ServiceOperationResult = ServiceOperationResult.Error };
+            }
+            return loginExistingUserResponse;
+        }
     }
 }
+

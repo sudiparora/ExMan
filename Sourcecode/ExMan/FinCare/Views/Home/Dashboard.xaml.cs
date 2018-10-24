@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FinCare.Views
+namespace FinCare.Views.Home
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class Shell : Window
+    public partial class Dashboard : UserControl
     {
-        public Shell()
+        public Dashboard()
         {
             InitializeComponent();
         }

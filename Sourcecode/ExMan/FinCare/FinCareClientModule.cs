@@ -22,7 +22,7 @@ namespace FinCare
         public void Initialize()
         {
             container.RegisterTypeForNavigation<Login>();
-            //container.RegisterTypeForNavigation<Home>();
+            container.RegisterTypeForNavigation<Dashboard>();
         }
     }
 }

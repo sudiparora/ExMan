@@ -12,6 +12,10 @@ namespace PerFin.DataAccess.Core
                 case EntityConstants.COMPONENTTYPE:
                     parser = new ComponentTypeParser();
                     break;
+                case EntityConstants.TRANSACTION:
+                    parser = new TransactionParser();
+                    break;
+                    
             }
             return parser;
         }

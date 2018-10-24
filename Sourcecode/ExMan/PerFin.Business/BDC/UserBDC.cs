@@ -61,5 +61,24 @@ namespace PerFin.Business.BDC
             }
         }
 
+        public async Task<OperationResult<SessionInfo>> LoginExistingUser(string username, string encryptedPassword, string deviceHash, DeviceType deviceType)
+        {
+            try
+            {
+                OperationResult<SessionInfo> registerNewLoginResult = await UserDACInstance.LoginExistingUser(username, encryptedPassword, deviceType, deviceHash);
+                if (registerNewLoginResult.IsSuccessful && registerNewLoginResult.Result.ErrorCode == 0)
+                {
+                    return OperationResult<SessionInfo>.ReturnSuccessResult(registerNewLoginResult.Result);
+                }
+                else
+                {
+                    return OperationResult<SessionInfo>.ReturnFailureResult();
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<SessionInfo>.LogAndReturnFailureResult(ex);
+            }
+        }
     }
 }

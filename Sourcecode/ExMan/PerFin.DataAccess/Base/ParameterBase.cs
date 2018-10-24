@@ -220,6 +220,16 @@ namespace PerFin.DataAccess.Base
             return parameter;
         }
 
-
+        protected static SqlParameter CreateParameter(string name, decimal value)
+        {
+            SqlParameter parameter = new SqlParameter
+            {
+                SqlDbType = SqlDbType.Decimal,
+                ParameterName = name,
+                Value = value,
+                Direction = ParameterDirection.Input
+            };
+            return parameter;
+        }
     }
 }

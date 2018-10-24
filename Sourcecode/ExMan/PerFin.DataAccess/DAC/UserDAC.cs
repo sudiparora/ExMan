@@ -41,9 +41,48 @@ namespace PerFin.DataAccess.DAC
                 command.Parameters.Add(CreateParameter("@PasswordHash", encryptedPassword));
                 command.Parameters.Add(CreateParameter("@DeviceHash", deviceHash));
                 command.Parameters.Add(CreateParameter("@DeviceTypeId", (int)deviceType));
-                command.Parameters.Add(CreateOutputParameter("@SessionId", System.Data.SqlDbType.VarChar));
+                command.Parameters.Add(CreateOutputParameter("@SessionId", System.Data.SqlDbType.VarChar, 50));
                 command.Parameters.Add(CreateOutputParameter("@ErrorCode", System.Data.SqlDbType.Int));
-                return Task.Run(() => OperationResult<SessionInfo>.ReturnSuccessResult(GetSingleEntity<SessionInfo>(ref command)));
+
+                return Task.Run(() =>
+                {
+                    DbOperationResult sqlDbOperationResult = GetDbOperationResult(ref command, DBConstants.SESSIONID);
+                    SessionInfo sessionInfo = new SessionInfo(string.Empty, sqlDbOperationResult.StatusCode);
+                    if (sessionInfo.ErrorCode == 0)
+                    {
+                        sessionInfo.SessionId = sqlDbOperationResult.Result.ToString();
+                    }
+                    return OperationResult<SessionInfo>.ReturnSuccessResult(sessionInfo);
+                });
+            }
+            catch (Exception ex)
+            {
+                return Task.Run(() => OperationResult<SessionInfo>.LogAndReturnFailureResult(ex));
+            }
+        }
+
+        public Task<OperationResult<SessionInfo>> LoginExistingUser(string username, string encryptedPassword, DeviceType deviceType, string deviceHash)
+        {
+            try
+            {
+                SqlCommand command = GetDbSprocCommand(SPConstants.SP_LOGIN);
+                command.Parameters.Add(CreateParameter("@Username", username));
+                command.Parameters.Add(CreateParameter("@PasswordHash", encryptedPassword));
+                command.Parameters.Add(CreateParameter("@DeviceHash", deviceHash));
+                command.Parameters.Add(CreateParameter("@DeviceTypeId", (int)deviceType));
+                command.Parameters.Add(CreateOutputParameter("@SessionId", System.Data.SqlDbType.VarChar, 50));
+                command.Parameters.Add(CreateOutputParameter("@ErrorCode", System.Data.SqlDbType.Int));
+
+                return Task.Run(() =>
+                {
+                    DbOperationResult sqlDbOperationResult = GetDbOperationResult(ref command, DBConstants.SESSIONID);
+                    SessionInfo sessionInfo = new SessionInfo(string.Empty, sqlDbOperationResult.StatusCode);
+                    if (sessionInfo.ErrorCode == 0)
+                    {
+                        sessionInfo.SessionId = sqlDbOperationResult.Result.ToString();
+                    }
+                    return OperationResult<SessionInfo>.ReturnSuccessResult(sessionInfo);
+                });
             }
             catch (Exception ex)
             {

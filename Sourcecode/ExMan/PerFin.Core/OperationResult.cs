@@ -26,6 +26,11 @@ namespace PerFin.Core
             return new OperationResult<T> { IsSuccessful = true, Result = result };
         }
 
+        public static OperationResult<T> ReturnOperationResult(DbOperationResult dbOperationResult)
+        {
+            return new OperationResult<T> { IsSuccessful = dbOperationResult.IsSuccessful, Result = dbOperationResult.IsSuccessful ? (T)dbOperationResult.Result : default(T) };
+        }
+
         public static OperationResult<T> LogAndReturnFailureResult(Exception ex, string message = null)
         {
             //LogFactory.Instance.Error(ex);

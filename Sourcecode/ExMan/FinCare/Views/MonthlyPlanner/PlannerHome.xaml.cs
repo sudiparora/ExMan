@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FinCare.Views
+namespace FinCare.Views.MonthlyPlanner
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for PlannerHome.xaml
     /// </summary>
-    public partial class Shell : Window
+    public partial class PlannerHome : UserControl
     {
-        public Shell()
+        public PlannerHome()
         {
             InitializeComponent();
         }

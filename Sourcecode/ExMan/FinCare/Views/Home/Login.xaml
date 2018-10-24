@@ -3,10 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:validation="clr-namespace:FinCare.Core.Validation"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:resources="clr-namespace:FinCare.Resources">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid x:Name="BaseLayoutGrid">
         <Border x:Name="LoginBorder">
             <Grid>
@@ -17,25 +27,61 @@
                 <Image Grid.Column="0"
                        Source="..\..\Resources\Images\logo_blue.png"/>
 
-                <StackPanel Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Orientation="Vertical"
-                            Margin="10">
-                    <TextBox mahAppsControls:TextBoxHelper.Watermark="{x:Static resources:Strings.Login_Username_Watermark}"
-                             Text="{Binding Username, Mode=TwoWay}"
-                             Margin="0 0 0 5"/>
+                <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}"
+                                     Grid.Column="1"
+                                     VerticalAlignment="Stretch">
+                    <StackPanel VerticalAlignment="Top"
+                                Orientation="Vertical"
+                                Margin="10">
 
-                    <PasswordBox mahAppsControls:PasswordBoxHelper.CapsLockWarningToolTip="{x:Static resources:Strings.Login_CapsLock_Warning}"
-                                 mahAppsControls:TextBoxHelper.Watermark="{x:Static resources:Strings.Login_Password_Watermark}"
-                                 PasswordChar="●"
-                                 PasswordChanged="PasswordBox_PasswordChanged"
-                                 Margin="0 0 0 5"/>
+                        <Expander Header="Already have an account"
+                                  IsExpanded="{Binding IsLoginExpanderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         VerticalAlignment="Top"
+                                         AcceptsReturn="False"
+                                         TextWrapping="Wrap"
+                                         materialDesign:HintAssist.Hint="{x:Static resources:Strings.Login_Username_Watermark}"
+                                         Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <!--<TextBox.Text>
+                                <Binding Path="Username" 
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay">
+                                    <Binding.ValidationRules>
+                                        <validation:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>-->
+                                </TextBox>
+                                <PasswordBox Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                             VerticalAlignment="Top"
+                                             materialDesign:HintAssist.Hint="{x:Static resources:Strings.Login_Password_Watermark}" 
+                                             PasswordChar="●"
+                                             PasswordChanged="PasswordBox_PasswordChanged"
+                                             Margin="0 0 0 5"/>
+                                <Button Content="{x:Static resources:Strings.Button_Login}"
+                                        Command="{Binding LoginCommand}"/>
+                            </StackPanel>
+                        </Expander>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" 
+                                Height="1" 
+                                HorizontalAlignment="Stretch" 
+                                SnapsToDevicePixels="True" />
 
-                    <Button Style="{StaticResource AccentedSquareButtonStyle}"
-                            Content="{x:Static resources:Strings.Button_Login}"
-                            Command="{Binding LoginCommand}"/>
+                        <Expander Header="Register"
+                                  IsExpanded="{Binding IsRegisterExpanderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            
+                        </Expander>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" 
+                                Height="1" 
+                                HorizontalAlignment="Stretch" 
+                                SnapsToDevicePixels="True" />
+                        <Expander Header="Forgot Password"
+                                  IsExpanded="{Binding IsForgotPasswordExpanderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-                </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </materialDesign:Card>
             </Grid>
         </Border>
     </Grid>

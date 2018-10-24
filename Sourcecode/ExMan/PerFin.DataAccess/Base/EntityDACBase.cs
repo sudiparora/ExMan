@@ -1,4 +1,5 @@
-﻿using PerFin.Core.Contracts;
+﻿using PerFin.Core;
+using PerFin.Core.Contracts;
 using PerFin.DataAccess.Core;
 using PerFin.Entities.Base;
 using System;
@@ -88,16 +89,17 @@ namespace PerFin.DataAccess.Base
             return entities;
         }
 
-        protected static bool GetBoolResults(ref SqlCommand command, string columnName)
+        protected static DbOperationResult GetDbOperationResult(ref SqlCommand command, string columnName = null)
         {
-            bool result = false;
+            DbOperationResult sqlDbOperation = new DbOperationResult();
             try
             {
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                if ((bool)command.Parameters[columnName].Value)
+                sqlDbOperation.StatusCode = (int)command.Parameters[DBConstants.STATUSCODE].Value;
+                if (sqlDbOperation.StatusCode == 0 && !string.IsNullOrEmpty(columnName))
                 {
-                    result = true;
+                    sqlDbOperation.Result = command.Parameters[columnName].Value;
                 }
             }
             finally
@@ -105,7 +107,7 @@ namespace PerFin.DataAccess.Base
                 command.Connection.Close();
                 command.Connection.Dispose();
             }
-            return result;
+            return sqlDbOperation;
         }
     }
 }
