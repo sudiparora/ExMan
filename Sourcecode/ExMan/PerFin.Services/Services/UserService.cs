@@ -24,12 +24,12 @@ namespace PerFin.Services
         #endregion
         internal UserBDC UserBDCInstance { get; }
 
-        public async Task<ResponseModel<List<ComponentType>>> GetAvailableComponentTypes(string username)
+        public async Task<ResponseModel<List<ComponentType>>> GetAvailableComponentTypes(string username, string sessionId)
         {
             ResponseModel<List<ComponentType>> componentTypes = null;
             try
             {
-                OperationResult<List<ComponentType>> componentTypesResponse = await UserBDCInstance.GetAuthorizedComponentsForUser(username);
+                OperationResult<List<ComponentType>> componentTypesResponse = await UserBDCInstance.GetAuthorizedComponentsForUser(username, sessionId);
                 if (componentTypesResponse.IsSuccessful)
                 {
                     componentTypes = new ResponseModel<List<ComponentType>>

@@ -2,6 +2,13 @@ INSERT INTO [lstComponentType]
            ([ComponentTypeName]
            ,[ComponentTypeCode])
      VALUES
+           ('Monthly Planner'
+           ,'MonthlyPlanner')
+
+INSERT INTO [lstComponentType]
+           ([ComponentTypeName]
+           ,[ComponentTypeCode])
+     VALUES
            ('Fixed Deposits'
            ,'FixedDeposits')
 

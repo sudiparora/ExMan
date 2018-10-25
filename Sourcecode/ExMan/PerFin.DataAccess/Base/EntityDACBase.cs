@@ -62,16 +62,16 @@ namespace PerFin.DataAccess.Base
             return entity;
         }
 
-        protected List<T> GetEntities<T>(ref SqlCommand command) where T : EntityBase
+        protected DbOperationResult GetEntities<T>(ref SqlCommand command) where T : EntityBase
         {
-            List<T> entities = new List<T>();
+            DbOperationResult sqlDbOperation = new DbOperationResult();
             try
             {
                 command.Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 IEntityParser parser = EntityParserFactoryInstance.GetParser(typeof(T));
                 parser.PopulateOrdinals(reader);
-
+                List<T> entities = new List<T>();
                 if (reader.HasRows)
                 {
                     while (reader.Read())
@@ -80,13 +80,18 @@ namespace PerFin.DataAccess.Base
                     }
                 }
                 reader.Close();
+                sqlDbOperation.StatusCode = (int)command.Parameters[DBConstants.STATUSCODE].Value;
+                if (sqlDbOperation.IsSuccessful)
+                {
+                    sqlDbOperation.Result = entities;
+                }
             }
             finally
             {
                 command.Connection.Close();
                 command.Connection.Dispose();
             }
-            return entities;
+            return sqlDbOperation;
         }
 
         protected static DbOperationResult GetDbOperationResult(ref SqlCommand command, string columnName = null)

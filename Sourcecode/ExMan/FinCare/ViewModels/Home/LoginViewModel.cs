@@ -4,6 +4,7 @@ using PerFin.Core.Services;
 using PerFin.Entities.Authentication;
 using PerFin.Services;
 using Prism.Commands;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -118,11 +119,13 @@ namespace FinCare.ViewModels.Home
             if (registerNewLoginResponse.ServiceOperationResult == ServiceOperationResult.Success && registerNewLoginResponse.Data != null)
             {
                 UserSettings.Default.SessionId = registerNewLoginResponse.Data.SessionId;
-                //ResponseModel<List<ComponentType>> componentTypesResponse = await userService.GetAvailableComponentTypes(Username);
-                //if (componentTypesResponse.ServiceOperationResult == ServiceOperationResult.Success)
-                //{
-                    RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.DashboardView, UriKind.Relative), NavigationCompleted);
-                //}
+                ResponseModel<List<ComponentType>> componentTypesResponse = await userService.GetAvailableComponentTypes(Username, registerNewLoginResponse.Data.SessionId);
+                if (componentTypesResponse.ServiceOperationResult == ServiceOperationResult.Success)
+                {
+                    NavigationParameters componentTypes = new NavigationParameters();
+                    componentTypes.Add("RegisteredComponentTypes", componentTypesResponse.Data);
+                    RegionManager.RequestNavigate(RegionNames.MainRegion, new Uri(ViewNames.DashboardView, UriKind.Relative), NavigationCompleted, componentTypes);
+                }
             }
             else
             {

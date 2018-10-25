@@ -21,11 +21,11 @@ namespace PerFin.Business.BDC
 
         internal UserDAC UserDACInstance { get; }
 
-        public async Task<OperationResult<List<ComponentType>>> GetAuthorizedComponentsForUser(string username)
+        public async Task<OperationResult<List<ComponentType>>> GetAuthorizedComponentsForUser(string username, string sessionId)
         {
             try
             {
-                OperationResult<List<ComponentType>> componentTypesResult = await UserDACInstance.GetAuthorizedComponentsForUser(username);
+                OperationResult<List<ComponentType>> componentTypesResult = await UserDACInstance.GetAuthorizedComponentsForUser(username, sessionId);
                 if (componentTypesResult.IsSuccessful)
                 {
                     return OperationResult<List<ComponentType>>.ReturnSuccessResult(componentTypesResult.Result);

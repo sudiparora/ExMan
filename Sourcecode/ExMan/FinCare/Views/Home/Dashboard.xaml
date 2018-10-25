@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -19,7 +20,27 @@
         <TextBlock Grid.Row="1"
                    Text="Area for Bread crumb bar!!"/>
         <Grid Grid.Row="2">
-            <ContentControl prism:RegionManager.RegionName="DashboardContentRegion" />
+
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemsSource="{Binding RegisteredComponentTypes}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Background="{DynamicResource PrimaryHueDarkBrush}"
+                                             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                             Width="200"
+                                             Padding="8">
+                            <TextBlock Text="{Binding ComponentTypeName}" 
+                                       Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--<ContentControl prism:RegionManager.RegionName="DashboardContentRegion" />-->
         </Grid>        
     </Grid>
 </UserControl>

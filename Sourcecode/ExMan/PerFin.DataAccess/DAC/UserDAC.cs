@@ -18,13 +18,29 @@ namespace PerFin.DataAccess.DAC
             :base(appSettings)
         { }
 
-        public Task<OperationResult<List<ComponentType>>> GetAuthorizedComponentsForUser(string username)
+        public Task<OperationResult<List<ComponentType>>> GetAuthorizedComponentsForUser(string username, string sessionId)
         {
             try
             {
                 SqlCommand command = GetDbSprocCommand(SPConstants.SP_FETCH_COMPONENTS_FOR_USER);
                 command.Parameters.Add(CreateParameter("@Username", username));
-                return Task.Run(() => OperationResult<List<ComponentType>>.ReturnSuccessResult(GetEntities<ComponentType>(ref command)));
+                command.Parameters.Add(CreateParameter("@SessionId", sessionId));
+                command.Parameters.Add(CreateOutputParameter("@ErrorCode", System.Data.SqlDbType.Int));
+
+                return Task.Run(() => 
+                {
+                    DbOperationResult dbOperationResult = GetEntities<ComponentType>(ref command);
+                    List<ComponentType> componentTypes = null;
+                    if (dbOperationResult.IsSuccessful)
+                    {
+                        componentTypes = (List<ComponentType>)dbOperationResult.Result;
+                        return OperationResult<List<ComponentType>>.ReturnSuccessResult(componentTypes);
+                    }
+                    else
+                    {
+                        return OperationResult<List<ComponentType>>.ReturnFailureResult();
+                    }
+                });
             }
             catch (Exception ex)
             {

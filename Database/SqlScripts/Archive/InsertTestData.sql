@@ -1,10 +1,10 @@
-DECLARE @UserID VARCHAR(128)
-IF EXISTS(SELECT 1 FROM tblUser WHERE UUID = '35c89528-bc06-4824-925b-e02134856353')
+DECLARE @LoginId VARCHAR(50)
+IF EXISTS(SELECT 1 FROM tblLogin WHERE Username = 'sudip.arora@gmail.com')
 BEGIN
-	SELECT @UserID = Id FROM tblUser WHERE UUID = '35c89528-bc06-4824-925b-e02134856353'
+	SELECT @LoginId = LoginId FROM tblLogin WHERE Username = 'sudip.arora@gmail.com'
 
 	SET NOCOUNT ON
-	DECLARE @lstComponentTypeID UNIQUEIDENTIFIER
+	DECLARE @lstComponentTypeID INT
 	DECLARE cur_user_ComponentType CURSOR
 	STATIC FOR
 	SELECT ComponentTypeID FROM lstComponentType
@@ -16,12 +16,12 @@ BEGIN
 			WHILE @@FETCH_STATUS = 0
 				BEGIN
 					
-					INSERT INTO tblComponentUserMapping
+					INSERT INTO tblComponentLoginMapping
 							   ([ComponentTypeID]
-							   ,[UserID])
+							   ,[LoginID])
 						 VALUES
 							   (@lstComponentTypeID
-							   ,@UserID)
+							   ,@LoginID)
 
 					FETCH NEXT FROM cur_user_ComponentType INTO @lstComponentTypeID
 

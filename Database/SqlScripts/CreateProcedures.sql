@@ -115,18 +115,26 @@ BEGIN
 END
 GO
 
---CREATE PROCEDURE usp_FetchComponentsForUser
---(
---	@Usersub UNIQUEIDENTIFIER
---)
---AS
---BEGIN
---	DECLARE @UserID UNIQUEIDENTIFIER
---	SELECT @UserID = Id FROM tblUser WHERE UUID = @Usersub
---	SELECT lstCT.ComponentTypeID,lstCT.ComponentTypeCode,lstCT.ComponentTypeName FROM lstComponentType lstCT 
---		INNER JOIN tblComponentUserMapping tCum ON lstCT.ComponentTypeID = tCum.ComponentTypeID
---		INNER JOIN tblUser tUser ON tCum.UserID = @UserID
-		
---END
---GO
+CREATE PROCEDURE usp_FetchComponentsForUser
+(
+	@Username VARCHAR(50),
+	@SessionId UNIQUEIDENTIFIER,
+	@ErrorCode INT OUTPUT
+)
+AS
+BEGIN
+	SET @ErrorCode = 0
+	DECLARE @LoginId UNIQUEIDENTIFIER, @UserInputLoginId UNIQUEIDENTIFIER
+	SELECT @UserInputLoginId = LoginId FROM tblLogin WHERE Username = @Username
+	IF(@UserInputLoginId <> @LoginID)
+		SET @ErrorCode = 5
+	ELSE
+		BEGIN
+			SELECT @LoginId = LoginId FROM tblDevice WHERE DeviceSessionId = @SessionId
+			SELECT lstCT.ComponentTypeID,lstCT.ComponentTypeCode,lstCT.ComponentTypeName FROM lstComponentType lstCT 
+				INNER JOIN tblComponentLoginMapping tClm ON lstCT.ComponentTypeID = tClm.ComponentTypeID
+				INNER JOIN tblLogin ON tClm.LoginId = @LoginId
+		END		
+END
+GO
 

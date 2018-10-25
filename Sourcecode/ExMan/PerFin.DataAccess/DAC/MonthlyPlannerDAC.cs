@@ -19,21 +19,21 @@ namespace PerFin.DataAccess.DAC
             : base(appSettings)
         { }
 
-        public Task<OperationResult<List<Transaction>>> GetUserTransactionsForMonth(string sessionId, int month, int year)
-        {
-            try
-            {
-                SqlCommand command = GetDbSprocCommand(SPConstants.SP_GET_USER_TRANSACTIONS_FOR_MONTH);
-                command.Parameters.Add(CreateParameter("@SessionId", sessionId));
-                command.Parameters.Add(CreateParameter("@SelectedMonth", month));
-                command.Parameters.Add(CreateParameter("@SelectedYear", year));
-                return Task.Run(() => OperationResult<List<Transaction>>.ReturnSuccessResult(GetEntities<Transaction>(ref command)));
-            }
-            catch (Exception ex)
-            {
-                return Task.Run(() => OperationResult<List<Transaction>>.LogAndReturnFailureResult(ex));
-            }
-        }
+        //public Task<OperationResult<List<Transaction>>> GetUserTransactionsForMonth(string sessionId, int month, int year)
+        //{
+        //    try
+        //    {
+        //        SqlCommand command = GetDbSprocCommand(SPConstants.SP_GET_USER_TRANSACTIONS_FOR_MONTH);
+        //        command.Parameters.Add(CreateParameter("@SessionId", sessionId));
+        //        command.Parameters.Add(CreateParameter("@SelectedMonth", month));
+        //        command.Parameters.Add(CreateParameter("@SelectedYear", year));
+        //        return Task.Run(() => OperationResult<List<Transaction>>.ReturnSuccessResult(GetEntities<Transaction>(ref command)));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Task.Run(() => OperationResult<List<Transaction>>.LogAndReturnFailureResult(ex));
+        //    }
+        //}
 
         public Task<OperationResult<int>> AddNewIncome(string sessionId, Transaction transaction)
         {
