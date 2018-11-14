@@ -15,8 +15,8 @@ namespace PerFin.DataAccess.DAC
     public class MonthlyPlannerDAC : EntityDACBase
     {
 
-        public MonthlyPlannerDAC(IAppSettings appSettings)
-            : base(appSettings)
+        public MonthlyPlannerDAC(IAppSettings appSettings, ILogger logger)
+            : base(appSettings, logger)
         { }
 
         //public Task<OperationResult<List<Transaction>>> GetUserTransactionsForMonth(string sessionId, int month, int year)
@@ -35,7 +35,7 @@ namespace PerFin.DataAccess.DAC
         //    }
         //}
 
-        public Task<OperationResult<int>> AddNewIncome(string sessionId, Transaction transaction)
+        public Task<DbOperationResult<int>> AddNewIncome(string sessionId, Transaction transaction)
         {
             try
             {
@@ -45,15 +45,16 @@ namespace PerFin.DataAccess.DAC
                 command.Parameters.Add(CreateParameter("@TransactionAmount", transaction.TransactionAmount));
                 command.Parameters.Add(CreateParameter("@TransactionStatusId", (int)transaction.TransactionStatus));
                 command.Parameters.Add(CreateOutputParameter("@StatusCode", SqlDbType.Int));
-                return Task.Run(() => OperationResult<int>.ReturnOperationResult(GetDbOperationResult(ref command)));
+                return Task.Run(() => GetDbOperationResult<int>(ref command));
             }
             catch (Exception ex)
             {
-                return Task.Run(() => OperationResult<int>.LogAndReturnFailureResult(ex));
+                LoggerInstance.LogError("Error adding new income at DAC Layer", ex);
+                return Task.Run(() => DbOperationResult<int>.ReturnFailureResult());
             }
         }
 
-        public Task<OperationResult<int>> AddNewExpense(string sessionId, Transaction transaction)
+        public Task<DbOperationResult<int>> AddNewExpense(string sessionId, Transaction transaction)
         {
             try
             {
@@ -64,11 +65,12 @@ namespace PerFin.DataAccess.DAC
                 command.Parameters.Add(CreateParameter("@TransactionNatureId", (int)transaction.TransactionNature));
                 command.Parameters.Add(CreateParameter("@TransactionStatusId", (int)transaction.TransactionStatus));
                 command.Parameters.Add(CreateOutputParameter("@StatusCode", SqlDbType.Int));
-                return Task.Run(() => OperationResult<int>.ReturnOperationResult(GetDbOperationResult(ref command)));
+                return Task.Run(() => GetDbOperationResult<int>(ref command));
             }
             catch (Exception ex)
             {
-                return Task.Run(() => OperationResult<int>.LogAndReturnFailureResult(ex));
+                LoggerInstance.LogError("Error adding new expense at DAC Layer", ex);
+                return Task.Run(() => DbOperationResult<int>.ReturnFailureResult());
             }
         }
 

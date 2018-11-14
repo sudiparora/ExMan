@@ -7,6 +7,7 @@ namespace PerFin.DataAccess.Base
     public abstract class DACBase : ParameterBase
     {
         internal IAppSettings AppSettingsInstance { get; set; }
+        internal ILogger LoggerInstance { get; set; }
        
         protected string ConnectionString
         {

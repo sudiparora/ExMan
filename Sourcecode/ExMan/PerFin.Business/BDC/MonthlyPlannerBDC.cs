@@ -8,8 +8,8 @@ namespace PerFin.Business.BDC
 {
     public class MonthlyPlannerBDC : BDCBase
     {
-        public MonthlyPlannerBDC(IAppSettings iAppSettings, MonthlyPlannerDAC monthlyPlannerDAC)
-            :base(iAppSettings)
+        public MonthlyPlannerBDC(IAppSettings iAppSettings, ILogger logger, MonthlyPlannerDAC monthlyPlannerDAC)
+            :base(iAppSettings, logger)
         {
             MonthlyPlannerDACInstance = monthlyPlannerDAC;
         }

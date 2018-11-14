@@ -4,42 +4,39 @@ namespace PerFin.Core
 {
     public class OperationResult<T>
     {
-        private OperationResult()
+        public OperationResult()
         { }
 
         #region Properties
 
-        public bool IsSuccessful { get; private set; }
+        public bool IsSuccessful { get; set; }
 
-        public T Result { get; private set; }
-
-        public Exception Exception { get; private set; }
-
-        public string ErrorMessage { get; set; }
+        public T Result { get; set; }
+        
+        public int ErrorCode { get; set; }
 
         #endregion
 
         #region Methods
 
-        public static OperationResult<T> ReturnSuccessResult(T result)
+        public static OperationResult<T> ReturnOperationResult(DbOperationResult<T> dbOperationResult)
         {
-            return new OperationResult<T> { IsSuccessful = true, Result = result };
+            OperationResult<T> operationResult = new OperationResult<T>();
+            operationResult.IsSuccessful = dbOperationResult.IsSuccessful;
+            if (!dbOperationResult.IsSuccessful)
+            {
+                operationResult.ErrorCode = dbOperationResult.StatusCode;
+            }
+            else
+            {
+                operationResult.Result = dbOperationResult.Result;
+            }
+            return operationResult;
         }
 
-        public static OperationResult<T> ReturnOperationResult(DbOperationResult dbOperationResult)
+        public static OperationResult<T> ReturnFailureResult()
         {
-            return new OperationResult<T> { IsSuccessful = dbOperationResult.IsSuccessful, Result = dbOperationResult.IsSuccessful ? (T)dbOperationResult.Result : default(T) };
-        }
-
-        public static OperationResult<T> LogAndReturnFailureResult(Exception ex, string message = null)
-        {
-            //LogFactory.Instance.Error(ex);
-            return new OperationResult<T> { IsSuccessful = false, Exception = ex, ErrorMessage = message };
-        }
-
-        public static OperationResult<T> ReturnFailureResult(string message = null)
-        {
-            return new OperationResult<T> { IsSuccessful = false, ErrorMessage = message };
+            return new OperationResult<T> { IsSuccessful = false };
         }
 
         #endregion

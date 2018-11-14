@@ -12,8 +12,8 @@ namespace PerFin.Business.BDC
     public class UserBDC: BDCBase
     {
 
-        public UserBDC(IAppSettings appSettings, UserDAC userDAC)
-            :base(appSettings)
+        public UserBDC(IAppSettings appSettings, ILogger logger, UserDAC userDAC)
+            :base(appSettings, logger)
         {
             UserDACInstance = userDAC;
         }
@@ -25,19 +25,12 @@ namespace PerFin.Business.BDC
         {
             try
             {
-                OperationResult<List<ComponentType>> componentTypesResult = await UserDACInstance.GetAuthorizedComponentsForUser(username, sessionId);
-                if (componentTypesResult.IsSuccessful)
-                {
-                    return OperationResult<List<ComponentType>>.ReturnSuccessResult(componentTypesResult.Result);
-                }
-                else
-                {
-                    return OperationResult<List<ComponentType>>.ReturnFailureResult();
-                }
+                return OperationResult<List<ComponentType>>.ReturnOperationResult(await UserDACInstance.GetAuthorizedComponentsForUser(username, sessionId));
             }
             catch (Exception ex)
             {
-                return OperationResult<List<ComponentType>>.LogAndReturnFailureResult(ex);
+                LoggerInstance.LogError("Error in getting authroized components for user", ex);
+                return OperationResult<List<ComponentType>>.ReturnFailureResult();
             }
         }
 
@@ -45,19 +38,25 @@ namespace PerFin.Business.BDC
         {
             try
             {
-                OperationResult<SessionInfo> registerNewLoginResult = await UserDACInstance.RegisterNewLogin(username, encryptedPassword, deviceHash, deviceType);
-                if (registerNewLoginResult.IsSuccessful && registerNewLoginResult.Result.ErrorCode == 0)
+                DbOperationResult<string> registerNewLoginResult = await UserDACInstance.RegisterNewLogin(username, encryptedPassword, deviceHash, deviceType);
+                OperationResult<SessionInfo> sessionInfoResult = default(OperationResult<SessionInfo>);
+                sessionInfoResult.IsSuccessful = registerNewLoginResult.IsSuccessful;
+                if (sessionInfoResult.IsSuccessful)
                 {
-                    return OperationResult<SessionInfo>.ReturnSuccessResult(registerNewLoginResult.Result);
+                    SessionInfo sessionInfo = default(SessionInfo);
+                    sessionInfo.SessionId = registerNewLoginResult.Result;
+                    sessionInfoResult.Result = sessionInfo;
                 }
                 else
                 {
-                    return OperationResult<SessionInfo>.ReturnFailureResult();
+                    sessionInfoResult.ErrorCode = registerNewLoginResult.StatusCode;
                 }
+                return sessionInfoResult;
             }
             catch (Exception ex)
             {
-                return OperationResult<SessionInfo>.LogAndReturnFailureResult(ex);
+                LoggerInstance.LogError("Error in logging in registering new login", ex);
+                return OperationResult<SessionInfo>.ReturnFailureResult();
             }
         }
 
@@ -65,19 +64,27 @@ namespace PerFin.Business.BDC
         {
             try
             {
-                OperationResult<SessionInfo> registerNewLoginResult = await UserDACInstance.LoginExistingUser(username, encryptedPassword, deviceType, deviceHash);
-                if (registerNewLoginResult.IsSuccessful && registerNewLoginResult.Result.ErrorCode == 0)
+                DbOperationResult<string> registerNewLoginResult = await UserDACInstance.LoginExistingUser(username, encryptedPassword, deviceType, deviceHash);
+                OperationResult<SessionInfo> sessionInfoResult = new OperationResult<SessionInfo>
                 {
-                    return OperationResult<SessionInfo>.ReturnSuccessResult(registerNewLoginResult.Result);
+                    IsSuccessful = registerNewLoginResult.IsSuccessful
+                };
+                if (sessionInfoResult.IsSuccessful)
+                {
+                    SessionInfo sessionInfo = new SessionInfo();
+                    sessionInfo.SessionId = registerNewLoginResult.Result;
+                    sessionInfoResult.Result = sessionInfo;
                 }
                 else
                 {
-                    return OperationResult<SessionInfo>.ReturnFailureResult();
+                    sessionInfoResult.ErrorCode = registerNewLoginResult.StatusCode;
                 }
+                return sessionInfoResult;
             }
             catch (Exception ex)
             {
-                return OperationResult<SessionInfo>.LogAndReturnFailureResult(ex);
+                LoggerInstance.LogError("Error in logging in existing user", ex);
+                return OperationResult<SessionInfo>.ReturnFailureResult();
             }
         }
     }

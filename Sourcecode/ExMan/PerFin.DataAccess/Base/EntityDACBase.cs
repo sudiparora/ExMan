@@ -12,9 +12,10 @@ namespace PerFin.DataAccess.Base
     public abstract class EntityDACBase : DACBase
     {
 
-        protected EntityDACBase(IAppSettings appSettings)
+        protected EntityDACBase(IAppSettings appSettings, ILogger logger)
         {
             AppSettingsInstance = appSettings;
+            LoggerInstance = logger;
         }
 
         /// <summary>
@@ -62,9 +63,9 @@ namespace PerFin.DataAccess.Base
             return entity;
         }
 
-        protected DbOperationResult GetEntities<T>(ref SqlCommand command) where T : EntityBase
+        protected DbOperationResult<List<T>> GetEntities<T>(ref SqlCommand command) where T : EntityBase
         {
-            DbOperationResult sqlDbOperation = new DbOperationResult();
+            DbOperationResult<List<T>> sqlDbOperation = new DbOperationResult<List<T>>();
             try
             {
                 command.Connection.Open();
@@ -94,9 +95,9 @@ namespace PerFin.DataAccess.Base
             return sqlDbOperation;
         }
 
-        protected static DbOperationResult GetDbOperationResult(ref SqlCommand command, string columnName = null)
+        protected static DbOperationResult<T> GetDbOperationResult<T>(ref SqlCommand command, string columnName = null)
         {
-            DbOperationResult sqlDbOperation = new DbOperationResult();
+            DbOperationResult<T> sqlDbOperation = new DbOperationResult<T>();
             try
             {
                 command.Connection.Open();
@@ -104,7 +105,7 @@ namespace PerFin.DataAccess.Base
                 sqlDbOperation.StatusCode = (int)command.Parameters[DBConstants.STATUSCODE].Value;
                 if (sqlDbOperation.StatusCode == 0 && !string.IsNullOrEmpty(columnName))
                 {
-                    sqlDbOperation.Result = command.Parameters[columnName].Value;
+                    sqlDbOperation.Result = (T)command.Parameters[columnName].Value;
                 }
             }
             finally
