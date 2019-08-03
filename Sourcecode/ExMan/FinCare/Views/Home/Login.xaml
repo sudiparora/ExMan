@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -35,9 +35,13 @@
                                 Margin="10">
 
                         <Expander Header="Already have an account"
-                                  IsExpanded="{Binding IsLoginExpanderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <StackPanel Orientation="Vertical">
+                                  IsExpanded="{Binding IsLoginExpanderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  VerticalContentAlignment="Stretch"
+                                  VerticalAlignment="Stretch">
+                            <StackPanel Orientation="Vertical"
+                                        Margin="20">
                                 <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Margin="0 0 0 10"
                                          VerticalAlignment="Top"
                                          AcceptsReturn="False"
                                          TextWrapping="Wrap"
@@ -54,11 +58,11 @@
                             </TextBox.Text>-->
                                 </TextBox>
                                 <PasswordBox Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                             Margin="0 0 0 20"
                                              VerticalAlignment="Top"
                                              materialDesign:HintAssist.Hint="{x:Static resources:Strings.Login_Password_Watermark}" 
                                              PasswordChar="●"
-                                             PasswordChanged="PasswordBox_PasswordChanged"
-                                             Margin="0 0 0 5"/>
+                                             PasswordChanged="PasswordBox_PasswordChanged"/>
                                 <Button Content="{x:Static resources:Strings.Button_Login}"
                                         Command="{Binding LoginCommand}"/>
                             </StackPanel>
@@ -76,6 +80,7 @@
                                 Height="1" 
                                 HorizontalAlignment="Stretch" 
                                 SnapsToDevicePixels="True" />
+                        
                         <Expander Header="Forgot Password"
                                   IsExpanded="{Binding IsForgotPasswordExpanderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 

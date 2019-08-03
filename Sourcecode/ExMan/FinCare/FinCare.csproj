@@ -126,6 +126,7 @@
       <DependentUpon>UserSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Home\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\MonthlyPlanner\MonthlyPlannerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Home\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>

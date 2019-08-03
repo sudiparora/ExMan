@@ -29,7 +29,7 @@ namespace PerFin.Business.BDC
             }
             catch (Exception ex)
             {
-                LoggerInstance.LogError("Error in getting authroized components for user", ex);
+                LoggerInstance.LogError("Error in getting authorized components for user", ex);
                 return OperationResult<List<ComponentType>>.ReturnFailureResult();
             }
         }
